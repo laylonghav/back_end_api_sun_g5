@@ -118,6 +118,7 @@ return [
         'mongodb' => [
             'driver' => 'mongodb',
             'host' => env('DB_HOST', '127.0.0.1'),
+            'dsn' => env('DB_URI', 'mongodb://127.0.0.1:27017'),// DSN = Data Source Name, This is the full MongoDB connection string.
             'port' => env('DB_PORT', 27017),
             'database' => env('DB_DATABASE'),
             'username' => env('DB_USERNAME'),
@@ -161,7 +162,7 @@ return [
 
         'options' => [
             'cluster' => env('REDIS_CLUSTER', 'redis'),
-            'prefix' => env('REDIS_PREFIX', Str::slug((string) env('APP_NAME', 'laravel')).'-database-'),
+            'prefix' => env('REDIS_PREFIX', Str::slug((string) env('APP_NAME', 'laravel')) . '-database-'),
             'persistent' => env('REDIS_PERSISTENT', false),
         ],
 
