@@ -1,3 +1,4 @@
+# Use PHP image with Debian Bullseye (better OpenSSL support)
 FROM php:8.2-fpm-bullseye
 
 # Install system dependencies and PHP extensions
