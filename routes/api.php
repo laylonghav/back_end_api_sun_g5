@@ -41,7 +41,7 @@ Route::put("/user/{id}", [UserController::class, 'update']);
 Route::delete("/user/{id}", [UserController::class, 'destroy']);
 
 // Product 
-Route::prefix("product")->group(function () {
+Route::prefix("product")->middleware('auth:sanctum')->group(function () {
     Route::get("/", [ProductController::class, 'index']);
     Route::get("/{id}", [ProductController::class, 'get']);
     Route::post("/", [ProductController::class, 'store']);
