@@ -1,0 +1,94 @@
+<?php
+
+use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\BrandController;
+use App\Http\Controllers\Api\CategoryController;
+use App\Http\Controllers\Api\OrderController;
+use App\Http\Controllers\Api\ProductController;
+use App\Http\Controllers\Api\ProductDetialController;
+use App\Http\Controllers\Api\SupplierController;
+use App\Http\Controllers\Api\UserController;
+use App\Models\Product;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
+
+// Route::get('/user', function (Request $request) {
+//     return $request->user();
+// })->middleware('auth:sanctum');
+
+
+// =========== API endpoint ============
+
+// Authentication
+Route::post("register", [AuthController::class, "register"]);
+Route::post("login", [AuthController::class, "login"]);
+
+Route::prefix("auth")->middleware('auth:sanctum')->group(function () {
+    Route::post("logout", [AuthController::class, "logout"]);
+    Route::get("me", [AuthController::class, "me"]);
+});
+
+// Retrieve data (Read)
+Route::get("/user", [UserController::class, 'index']);
+
+// Store new data = Create
+Route::post("/user", [UserController::class, 'store']);
+
+// update existing data = update
+Route::put("/user/{id}", [UserController::class, 'update']);
+
+// Romove data = Delete
+Route::delete("/user/{id}", [UserController::class, 'destroy']);
+
+// Product 
+Route::prefix("product")->group(function () {
+    Route::get("/", [ProductController::class, 'index']);
+    Route::get("/{id}", [ProductController::class, 'get']);
+    Route::post("/", [ProductController::class, 'store']);
+    Route::put("/{id}", [ProductController::class, 'update']);
+    Route::delete("/{id}", [ProductController::class, 'destroy']);
+});
+
+Route::prefix("product_detail")->middleware('auth:sanctum')->group(function () {
+    Route::get("/", [ProductDetialController::class, 'index']);
+    Route::get("/{id}", [ProductDetialController::class, 'show']);
+    Route::post("/", [ProductDetialController::class, 'store']);
+    Route::put("/{id}", [ProductDetialController::class, 'update']);
+    Route::delete("/{id}", [ProductDetialController::class, 'destroy']);
+});
+
+Route::prefix("category_v1")->middleware('auth:sanctum')->group(function () {
+    Route::get("/", [CategoryController::class, 'index']);
+    Route::get("/search", [CategoryController::class, 'search']);
+    Route::get("/{id}", [CategoryController::class, 'show']);
+    Route::post("/", [CategoryController::class, 'store']);
+    Route::put("/{id}", [CategoryController::class, 'update']);
+    Route::delete("/{id}", [CategoryController::class, 'destroy']);
+});
+
+Route::prefix("brand")->middleware('auth:sanctum')->group(function () {
+    Route::get("/", [BrandController::class, 'index']);
+    Route::get("/search", [BrandController::class, 'search']);
+    Route::get("/{id}", [BrandController::class, 'show']);
+    Route::post("/", [BrandController::class, 'store']);
+    Route::put("/{id}", [BrandController::class, 'update']);
+    Route::delete("/{id}", [BrandController::class, 'destroy']);
+});
+
+Route::prefix("order")->middleware('auth:sanctum')->group(function () {
+    Route::get("/", [OrderController::class, 'index']);
+    Route::get("/{id}", [OrderController::class, 'show']);
+    Route::post("/", [OrderController::class, 'store']);
+    Route::put("/{id}", [OrderController::class, 'update']);
+    Route::delete("/{id}", [OrderController::class, 'destroy']);
+});
+
+Route::prefix("supplier")->middleware('auth:sanctum')->group(function () {
+    Route::get("/search", [SupplierController::class, 'search']);
+    Route::get("/", [SupplierController::class, 'index']);
+    Route::get("/{id}", [SupplierController::class, 'show']);
+    Route::post("/", [SupplierController::class, 'store']);
+    Route::post("/bluk", [SupplierController::class, 'storeBluk']);
+    Route::put("/{id}", [SupplierController::class, 'update']);
+    Route::delete("/{id}", [SupplierController::class, 'destroy']);
+});

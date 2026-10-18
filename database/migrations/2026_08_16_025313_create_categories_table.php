@@ -1,0 +1,29 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+// use Illuminate\Database\Schema\Blueprint; // for SQL
+use MongoDB\Laravel\Schema\Blueprint; // for mongoDB
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration {
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create('categories', function (Blueprint $collection) {
+            $collection->id();
+            $collection->string("name");
+            $collection->text("description");
+            $collection->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('categories');
+    }
+};
